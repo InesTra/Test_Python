@@ -14,3 +14,14 @@ sma_algo(data,9)
 with urllib.request.urlopen("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo)") as url:
     data = json.loads(url.read().decode())
     print(data)
+
+#3 Calculate Average Price
+
+def average_price(date):
+
+    high=data['Time Series (Daily)'][date]['2. high']
+    low=data['Time Series (Daily)'][date]['3. low']
+    average_price=(float(high)+float(low))/2
+    print(average_price)
+    
+ #4 Calculate SMA values of 5 day  based on daily average prices
