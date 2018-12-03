@@ -25,3 +25,15 @@ def average_price(date):
     print(average_price)
     
  #4 Calculate SMA values of 5 day  based on daily average prices
+ 
+data=data['Time Series (Daily)']
+df = pd.DataFrame(data).T
+#rename columns
+df = df.rename(columns={'2. high':'Hight','3. low':'Low'})
+#change data type
+df['Hight']=df['Hight'].astype(float)
+df['Low']=df['Low'].astype(float)
+df['Averge Price']=(df['Hight'] + df['Low'])/2
+df['SMA']=0
+print(df)
+#5 Calculate the profit
