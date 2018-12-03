@@ -8,3 +8,9 @@ def sma_algo(data,window):
 	print(sma)
 
 sma_algo(data,9)
+
+#2 Import data
+
+with urllib.request.urlopen("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo)") as url:
+    data = json.loads(url.read().decode())
+    print(data)
