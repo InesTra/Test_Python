@@ -1,3 +1,8 @@
+import numpy as np
+import urllib.request, json 
+import pandas as pd
+import matplotlib.pyplot as plt
+
 #1.  sma algorithme
 
 data=[22.81, 23.09 , 22.91 , 23.23 ,22.83, 23.05, 23.02 ,23.29, 23.41,23.49,24.60,24.63,24.51,23.73,23.31,23.53,23.06,23.25,23.12,22.80,22.84] 
@@ -24,7 +29,7 @@ def average_price(date):
     average_price=(float(high)+float(low))/2
     print(average_price)
     
- #4 Calculate SMA values of 5 day  based on daily average prices
+#4 Calculate SMA values of 5 day  based on daily average prices
  
 data=data['Time Series (Daily)']
 df = pd.DataFrame(data).T
@@ -34,6 +39,33 @@ df = df.rename(columns={'2. high':'Hight','3. low':'Low'})
 df['Hight']=df['Hight'].astype(float)
 df['Low']=df['Low'].astype(float)
 df['Averge Price']=(df['Hight'] + df['Low'])/2
-df['SMA']=0
-print(df)
+#Calculate SMA values
+sma=sma_algo(df['Averge Price'],5)
+sma = pd.DataFrame(sma)
+print(sma)
+
 #5 Calculate the profit
+
+#Extract date
+date=pd.DataFrame(df.index)
+date=date.drop(axis=1,index=[0,1,2,3])
+date.index = np.arange(len(date.index))
+
+#create new dataframe with sma values and the date
+df1= pd.concat([date,sma], axis=1,ignore_index=True).transpose()
+df1= concat.T.set_index(0)[1].rename('sma').astype(float)
+
+#add the new dataframe to the previous one
+df['SMA']=df1
+print(df)
+
+#visualize data
+df[['Averge Price','SMA']].plot(grid=True)
+plt.title('sma')
+plt.show()
+
+#Calculate the profit
+buy_actions= df.loc[df['SMA'] < df['Averge Price'],'Averge Price'].sum()
+sell_action= df.loc[df['SMA'] > df['Averge Price'],'SMA'].sum()
+profit=sell_action-buy_actions
+print("user's profit :",profit)
