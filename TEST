@@ -5,14 +5,10 @@ import matplotlib.pyplot as plt
 
 #1.  sma algorithme
 
-data=[22.81, 23.09 , 22.91 , 23.23 ,22.83, 23.05, 23.02 ,23.29, 23.41,23.49,24.60,24.63,24.51,23.73,23.31,23.53,23.06,23.25,23.12,22.80,22.84] 
-
 def sma_algo(data,window):
 	weights=np.repeat(1.0,window)
 	sma=np.convolve(data,weights/window,'valid')
-	print(sma)
-
-sma_algo(data,9)
+	return(sma)
 
 #2 Import data
 
@@ -33,12 +29,15 @@ def average_price(date):
  
 data=data['Time Series (Daily)']
 df = pd.DataFrame(data).T
+
 #rename columns
 df = df.rename(columns={'2. high':'Hight','3. low':'Low'})
+
 #change data type
 df['Hight']=df['Hight'].astype(float)
 df['Low']=df['Low'].astype(float)
 df['Averge Price']=(df['Hight'] + df['Low'])/2
+
 #Calculate SMA values
 sma=sma_algo(df['Averge Price'],5)
 sma = pd.DataFrame(sma)
