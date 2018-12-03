@@ -1,0 +1,11 @@
+#1.  sma algorithme
+
+data=[22.81, 23.09 , 22.91 , 23.23 ,22.83, 23.05, 23.02 ,23.29, 23.41,23.49,24.60,24.63,24.51,23.73,23.31,23.53,23.06,23.25,23.12,22.80,22.84] 
+
+def sma_algo(data,window):
+
+		weights=np.repeat(1.0,window)
+		sma=np.convolve(data,weights/window,'valid')
+		print(sma)
+
+sma_algo(data,9)
